@@ -2,6 +2,8 @@ module Examples.Language.MicroKanren where
 
 import Language.MicroKanren
 
+import Numeric.Natural
+
 emptyState :: (State a, Natural)
 emptyState = ([], 0)
 
