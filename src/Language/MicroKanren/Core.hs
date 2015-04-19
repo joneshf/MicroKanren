@@ -33,8 +33,12 @@ unify u v s = go (walk u s) (walk v s)
 u === v = \(a, d) -> pure (unify u v a, d)
 
 callFresh :: (Var -> Goal a) -> Goal a
-callFresh f = \(a, d) -> f (Var d) (a, d + 1)
+callFresh f (a, d) = f (Var d) (a, d + 1)
 
 conj, disj :: Goal a -> Goal a -> Goal a
 conj = (>=>)
-disj = liftM2 (++)
+disj = liftM2 plus
+
+plus :: [a] -> [a] -> [a]
+plus []     ys      = ys
+plus (x:xs) ~(y:ys) = x:y:(xs `plus` ys)
